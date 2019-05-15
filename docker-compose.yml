@@ -1,15 +1,26 @@
 version: "3"
 
 services:
-  pg:
+  db:
     image: postgres
+    environment:
+      POSTGRES_PASSWORD: hanami
+      POSTGRES_USER: hanami
+      POSTGRES_DB: hanami
+  db-test:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: hanami
+      POSTGRES_USER: hanami
+      POSTGRES_DB: hanami
 
   hanami:
     build:
       context: .
     environment:
       - APP_PORT=4000
-      - DATABASE_URL=postgres://pg:5432/hanami
+      - DATABASE_URL=postgres://hanami:hanami@db:5432/hanami
+      - TEST_DATABASE_URL=postgres://hanami:hanami@db-test:5432/hanami
     ports:
       - 4000:3000
     volumes:
