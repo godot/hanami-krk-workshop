@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  pg:
+    image: postgres
+
+  hanami:
+    build:
+      context: .
+    environment:
+      - APP_PORT=4000
+      - DATABASE_URL=postgres://pg:5432/hanami
+    ports:
+      - 4000:3000
+    volumes:
+      - ./:/usr/app
+      - bundle:/usr/local/bundle
+
+volumes:
+  bundle:
+    driver: local
+  postgres-data:
+    driver: local
